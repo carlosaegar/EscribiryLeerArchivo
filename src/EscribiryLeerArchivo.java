@@ -1,13 +1,34 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+public class EscribiryLeerArchivo {
+    public static void main(String[] args) {
+        String nombreArchivo = "nombres.txt";
+        String[] nombres = {"Ana", "Juan", "Pedro", "Lucía", "Carlos", "Jose"};
+
+        //Escribimos en el archivo
+
+        try (FileWriter escritor = new FileWriter(nombreArchivo)) {
+            for (String nombre : nombres) {
+                escritor.write(nombre + " ");
+            }
+            System.out.println("Archivo '" + nombreArchivo + "' creado.");
+        } catch (IOException e) {
+            System.out.println("Error al escribir el archivo: " + e.getMessage());
+        }
+
+        // leemos el archivo
+        System.out.println("Leyendo el archivo:");
+
+        try (Scanner lector = new Scanner(new File(nombreArchivo))) {
+            while (lector.hasNextLine()) {
+                String linea = lector.nextLine();
+                System.out.println("- " + linea);
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
     }
 }
